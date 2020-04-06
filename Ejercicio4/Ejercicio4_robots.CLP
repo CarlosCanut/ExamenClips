@@ -7,6 +7,19 @@
 	(box 5 paquetes 0 destino 0)
 )
 
+(defrule recogerPaquete
+	(declare (salience 25))
+	?f <- (robot box ?box paquetes $?p_ini ?p $?p_fin destinos $?d_ini ?d $?d_fin direccion ?direccion)
+	?b <- (box ?box paquetes ?paquete_box destino ?destino_paquete)
+	(test (< ?p 8))
+	=>
+	(retract ?f)
+	(assert (robot box ?box paquetes $?p_ini (+ ?p ?paquete_box) $?p_fin destinos $?d_ini ?d $?d_fin direccion ?direccion) )
+	(retract ?b)
+	(assert (box ?box paquetes 0 destino 0))
+	
+)
+
 (defrule moverseDerecha
 	(declare (salience 25))
 	?f <- (robot box ?box paquetes $?p_ini ?p $?p_fin destinos $?d_ini ?d $?d_fin direccion ?direccion)
